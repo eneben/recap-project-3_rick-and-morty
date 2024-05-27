@@ -26,8 +26,3 @@ export function CharacterCard(url, name, status, type, episode) {
 `;
   cardList.append(newCard);
 }
-
-// const url =
-//   "https://upload.wikimedia.org/wikipedia/commons/d/d8/Person_icon_BLACK-01.svg";
-// const episode = ["keks", "krümel", "kuchen"];
-// CharacterCard(url, "John", "alive", "male", episode);
