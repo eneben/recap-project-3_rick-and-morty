@@ -1,4 +1,5 @@
 import { CharacterCard } from "./components/CharacterCard/CharacterCard.js";
+// import {  } from "./components/NavPagination/NavPagination.js";
 
 const cardContainer = document.querySelector('[data-js="card-container"]');
 const searchBarContainer = document.querySelector(
@@ -11,11 +12,12 @@ const nextButton = document.querySelector('[data-js="button-next"]');
 const pagination = document.querySelector('[data-js="pagination"]');
 
 // States
-const maxPage = 1;
-const page = 1;
+const minPage = 1;
+const maxPage = 42;
+let page = 1;
 const searchQuery = "";
 
-const url = "https://rickandmortyapi.com/api/character";
+const url = `https://rickandmortyapi.com/api/character?page=${page}`;
 
 async function fetchCharacters() {
   const response = await fetch(url);
@@ -39,3 +41,23 @@ function renderCharacters(characters) {
     );
   });
 }
+
+prevButton.addEventListener("click", (event) => {
+  console.log("event: ", event);
+  if (page === minPage) {
+    alert("You are already on page 1!");
+  } else {
+    page--;
+    fetchCharacters();
+  }
+});
+
+nextButton.addEventListener("click", (event) => {
+  console.log("event: ", event);
+  if (page === maxPage) {
+    alert("You are already on the last page!");
+  } else {
+    page++;
+    fetchCharacters();
+  }
+});
