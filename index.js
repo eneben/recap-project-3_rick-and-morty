@@ -28,6 +28,7 @@ async function fetchCharacters() {
 fetchCharacters();
 
 function renderCharacters(characters) {
+  cardContainer.innerHTML = "";
   characters.forEach((character) => {
     CharacterCard(
       character.image,

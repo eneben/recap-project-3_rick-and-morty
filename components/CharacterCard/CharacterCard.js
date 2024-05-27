@@ -1,4 +1,4 @@
-const cardList = document.querySelector('[data-js="card-container"]');
+const cardContainer = document.querySelector('[data-js="card-container"]');
 
 export function CharacterCard(url, name, status, type, episode) {
   const newCard = document.createElement("li");
@@ -24,5 +24,5 @@ export function CharacterCard(url, name, status, type, episode) {
     </dl>
   </div>
 `;
-  cardList.append(newCard);
+  cardContainer.append(newCard);
 }
