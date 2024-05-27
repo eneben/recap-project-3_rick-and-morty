@@ -1,5 +1,6 @@
 import { CharacterCard } from "./components/CharacterCard/CharacterCard.js";
-// import {  } from "./components/NavPagination/NavPagination.js";
+
+console.clear();
 
 const cardContainer = document.querySelector('[data-js="card-container"]');
 const searchBarContainer = document.querySelector(
@@ -17,9 +18,8 @@ const maxPage = 42;
 let page = 1;
 const searchQuery = "";
 
-const url = `https://rickandmortyapi.com/api/character?page=${page}`;
-
 async function fetchCharacters() {
+  const url = `https://rickandmortyapi.com/api/character?page=${page}`;
   const response = await fetch(url);
   const data = await response.json();
   console.log(data);
@@ -49,6 +49,7 @@ prevButton.addEventListener("click", (event) => {
   } else {
     page--;
     fetchCharacters();
+    pagination.textContent = `${page} / ${maxPage}`;
   }
 });
 
@@ -58,6 +59,8 @@ nextButton.addEventListener("click", (event) => {
     alert("You are already on the last page!");
   } else {
     page++;
+    console.log(page);
     fetchCharacters();
+    pagination.textContent = `${page} / ${maxPage}`;
   }
 });
