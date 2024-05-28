@@ -22,9 +22,7 @@ async function fetchCharacters() {
   const url = `https://rickandmortyapi.com/api/character?page=${page}`;
   const response = await fetch(url);
   const data = await response.json();
-  console.log(data);
   const characters = data.results;
-  console.log("Data results: ", data.results);
   renderCharacters(characters);
 }
 fetchCharacters();
@@ -43,7 +41,6 @@ function renderCharacters(characters) {
 }
 
 prevButton.addEventListener("click", (event) => {
-  console.log("event: ", event);
   if (page === minPage) {
     alert("You are already on page 1!");
   } else {
@@ -54,7 +51,6 @@ prevButton.addEventListener("click", (event) => {
 });
 
 nextButton.addEventListener("click", (event) => {
-  console.log("event: ", event);
   if (page === maxPage) {
     alert("You are already on the last page!");
   } else {
