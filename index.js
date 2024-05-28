@@ -17,13 +17,22 @@ let page = 1;
 let searchQuery = "";
 
 async function fetchCharacters() {
-  const url = `https://rickandmortyapi.com/api/character?page=${page}&name=${searchQuery}`;
-  const response = await fetch(url);
-  const data = await response.json();
-  maxPage = data.info.pages;
-  const characters = data.results;
-  pagination.textContent = `${page} / ${maxPage}`;
-  renderCharacters(characters);
+  try {
+    const url = `https://rickandmortyapi.com/api/character?page=${page}&name=${searchQuery}`;
+    const response = await fetch(url);
+    if (!response.ok) {
+      throw new Error(`Failed to fetch data! Status code: ${response.status}`);
+    }
+    const data = await response.json();
+    maxPage = data.info.pages;
+    const characters = data.results;
+    pagination.textContent = `${page} / ${maxPage}`;
+    renderCharacters(characters);
+    return { data };
+  } catch (error) {
+    console.error("Error fetching characters: ", error);
+    return { error: error.message || "Unknown error" };
+  }
 }
 
 fetchCharacters();
@@ -43,7 +52,7 @@ function renderCharacters(characters) {
 
 const prevButton = NavButton("previous", "button--prev", () => {
   if (page === minPage) {
-    alert("You are already on page 1!");
+    alert("You are already on the first page!");
   } else {
     page--;
     fetchCharacters();
