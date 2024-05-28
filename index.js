@@ -1,5 +1,5 @@
 import { CharacterCard } from "./components/CharacterCard/CharacterCard.js";
-import { PageNumbers } from "./components/NavPagination/NavPagination.js";
+import { NavPagination } from "./components/NavPagination/NavPagination.js";
 import { NavButton } from "./components/NavButton/NavButton.js";
 
 console.clear();
@@ -10,7 +10,6 @@ const searchBarContainer = document.querySelector(
 );
 const searchBar = document.querySelector('[data-js="search-bar"]');
 const navigation = document.querySelector('[data-js="navigation"]');
-const pagination = document.querySelector('[data-js="pagination"]');
 
 // States
 const minPage = 1;
@@ -23,8 +22,8 @@ async function fetchCharacters() {
   const response = await fetch(url);
   const data = await response.json();
   maxPage = data.info.pages;
-  PageNumbers(pagination, page, maxPage);
   const characters = data.results;
+  pagination.textContent = `${page} / ${maxPage}`;
   renderCharacters(characters);
 }
 
@@ -49,7 +48,6 @@ const prevButton = NavButton("previous", "button--prev", () => {
   } else {
     page--;
     fetchCharacters();
-    PageNumbers(pagination, page, maxPage);
   }
 });
 
@@ -59,17 +57,17 @@ const nextButton = NavButton("next", "button--next", () => {
   } else {
     page++;
     fetchCharacters();
-    PageNumbers(pagination, page, maxPage);
   }
 });
 
-navigation.append(prevButton, nextButton);
+const pagination = NavPagination();
+
+navigation.append(prevButton, pagination, nextButton);
 
 searchBar.addEventListener("submit", (event) => {
   event.preventDefault();
   searchQuery = event.target.query.value;
   page = 1;
   fetchCharacters();
-  PageNumbers(pagination, page, maxPage);
   event.target.reset();
 });
