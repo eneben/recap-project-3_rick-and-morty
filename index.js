@@ -1,5 +1,6 @@
 import { CharacterCard } from "./components/CharacterCard/CharacterCard.js";
 import { PageNumbers } from "./components/NavPagination/NavPagination.js";
+import { NavButton } from "./components/NavButton/NavButton.js";
 
 console.clear();
 
@@ -9,8 +10,6 @@ const searchBarContainer = document.querySelector(
 );
 const searchBar = document.querySelector('[data-js="search-bar"]');
 const navigation = document.querySelector('[data-js="navigation"]');
-const prevButton = document.querySelector('[data-js="button-prev"]');
-const nextButton = document.querySelector('[data-js="button-next"]');
 const pagination = document.querySelector('[data-js="pagination"]');
 
 // States
@@ -44,7 +43,7 @@ function renderCharacters(characters) {
   });
 }
 
-prevButton.addEventListener("click", (event) => {
+const prevButton = NavButton("previous", "button--prev", () => {
   if (page === minPage) {
     alert("You are already on page 1!");
   } else {
@@ -54,7 +53,7 @@ prevButton.addEventListener("click", (event) => {
   }
 });
 
-nextButton.addEventListener("click", (event) => {
+const nextButton = NavButton("next", "button--next", () => {
   if (page === maxPage) {
     alert("You are already on the last page!");
   } else {
@@ -63,6 +62,8 @@ nextButton.addEventListener("click", (event) => {
     PageNumbers(pagination, page, maxPage);
   }
 });
+
+navigation.append(prevButton, nextButton);
 
 searchBar.addEventListener("submit", (event) => {
   event.preventDefault();
