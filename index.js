@@ -1,6 +1,7 @@
 import { CharacterCard } from "./components/CharacterCard/CharacterCard.js";
 import { NavPagination } from "./components/NavPagination/NavPagination.js";
 import { NavButton } from "./components/NavButton/NavButton.js";
+import { SearchBar } from "./components/SearchBar/SearchBar.js";
 
 console.clear();
 
@@ -8,10 +9,8 @@ const cardContainer = document.querySelector('[data-js="card-container"]');
 const searchBarContainer = document.querySelector(
   '[data-js="search-bar-container"]'
 );
-const searchBar = document.querySelector('[data-js="search-bar"]');
 const navigation = document.querySelector('[data-js="navigation"]');
 
-// States
 const minPage = 1;
 let maxPage = 42;
 let page = 1;
@@ -64,10 +63,12 @@ const pagination = NavPagination();
 
 navigation.append(prevButton, pagination, nextButton);
 
-searchBar.addEventListener("submit", (event) => {
+const searchBar = SearchBar((event) => {
   event.preventDefault();
   searchQuery = event.target.query.value;
   page = 1;
   fetchCharacters();
   event.target.reset();
 });
+
+searchBarContainer.append(searchBar);
