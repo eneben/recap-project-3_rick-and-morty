@@ -1,4 +1,5 @@
 import { CharacterCard } from "./components/CharacterCard/CharacterCard.js";
+import { PageNumbers } from "./components/NavPagination/NavPagination.js";
 
 console.clear();
 
@@ -23,7 +24,7 @@ async function fetchCharacters() {
   const response = await fetch(url);
   const data = await response.json();
   maxPage = data.info.pages;
-  PageNumbers();
+  PageNumbers(pagination, page, maxPage);
   const characters = data.results;
   renderCharacters(characters);
 }
@@ -43,17 +44,13 @@ function renderCharacters(characters) {
   });
 }
 
-function PageNumbers() {
-  pagination.textContent = `${page} / ${maxPage}`;
-}
-
 prevButton.addEventListener("click", (event) => {
   if (page === minPage) {
     alert("You are already on page 1!");
   } else {
     page--;
     fetchCharacters();
-    PageNumbers();
+    PageNumbers(pagination, page, maxPage);
   }
 });
 
@@ -63,7 +60,7 @@ nextButton.addEventListener("click", (event) => {
   } else {
     page++;
     fetchCharacters();
-    PageNumbers();
+    PageNumbers(pagination, page, maxPage);
   }
 });
 
@@ -72,6 +69,6 @@ searchBar.addEventListener("submit", (event) => {
   searchQuery = event.target.query.value;
   page = 1;
   fetchCharacters();
-  PageNumbers();
+  PageNumbers(pagination, page, maxPage);
   event.target.reset();
 });
